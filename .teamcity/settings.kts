@@ -47,4 +47,9 @@ object Build : BuildType({
         perfmon {
         }
     }
+
+    dependencies {
+        snapshot(AbsoluteId("CleanUpTesting_Build")) {
+        }
+    }
 })

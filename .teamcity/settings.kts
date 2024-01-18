@@ -31,8 +31,10 @@ project {
 
     buildType(Build)
     buildType(Package)
+    buildType(Onemore)
     sequential {
         buildType(Package)
+        buildType(Onemore)
         buildType(Build)
     }
 }
@@ -78,6 +80,29 @@ object Package : BuildType({
 
         maven {
             goals = "compile"
+            runnerArgs = "-Dmaven.test.failure.ignore=true"
+        }
+    }
+    triggers {
+        vcs {
+        }
+    }
+
+    features {
+        perfmon {
+        }
+    }
+})
+object Onemore : BuildType({
+    name = "Onemore"
+
+    vcs {
+        root(DslContext.settingsRoot)
+    }
+    steps {
+
+        maven {
+            goals = "test"
             runnerArgs = "-Dmaven.test.failure.ignore=true"
         }
     }

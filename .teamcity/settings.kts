@@ -31,6 +31,10 @@ project {
 
     buildType(Build)
     buildType(Package)
+    sequential {
+        buildType(Package)
+        buildType(Build)
+    }
 }
 object Build : BuildType({
     name = "Build"
@@ -61,7 +65,6 @@ object Build : BuildType({
         }
         snapshot(AbsoluteId("MyProject_Build")){
         }
-        snapshot(AbsoluteId("Package")){}
     }
 
 })

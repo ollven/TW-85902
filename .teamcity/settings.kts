@@ -1,6 +1,7 @@
 import jetbrains.buildServer.configs.kotlin.*
 import jetbrains.buildServer.configs.kotlin.buildFeatures.perfmon
 import jetbrains.buildServer.configs.kotlin.triggers.vcs
+import jetbrains.buildServer.configs.kotlin.buildSteps.maven
 
 /*
 The settings script is an entry point for defining a TeamCity
@@ -29,14 +30,22 @@ version = "2023.11"
 project {
 
     buildType(Build)
+    buildType(Package)
 }
-
 object Build : BuildType({
     name = "Build"
 
     vcs {
         root(DslContext.settingsRoot)
     }
+    steps {
+
+        maven {
+            goals = "clean test"
+            runnerArgs = "-Dmaven.test.failure.ignore=true"
+        }
+    }
+
 
     triggers {
         vcs {
@@ -47,12 +56,35 @@ object Build : BuildType({
         perfmon {
         }
     }
-
     dependencies {
         snapshot(AbsoluteId("CleanUpTesting_Build")) {
         }
         snapshot(AbsoluteId("MyProject_Build")){
+        }
+        snapshot(AbsoluteId("Package")){}
+    }
 
+})
+object Package : BuildType({
+    name = "Package"
+
+    vcs {
+        root(DslContext.settingsRoot)
+    }
+    steps {
+
+        maven {
+            goals = "compile"
+            runnerArgs = "-Dmaven.test.failure.ignore=true"
+        }
+    }
+    triggers {
+        vcs {
+        }
+    }
+
+    features {
+        perfmon {
         }
     }
 })

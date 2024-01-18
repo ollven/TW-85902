@@ -51,5 +51,8 @@ object Build : BuildType({
     dependencies {
         snapshot(AbsoluteId("CleanUpTesting_Build")) {
         }
+        snapshot(AbsoluteId("MyProject_Build")){
+
+        }
     }
 })

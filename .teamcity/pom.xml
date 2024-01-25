@@ -11,6 +11,9 @@
     <artifactId>configs-dsl-kotlin-parent</artifactId>
     <version>1.0-SNAPSHOT</version>
   </parent>
+    <properties>
+    <teamcity.dsl.version>2023.05</teamcity.dsl.version>
+  </properties>
 
   <repositories>
     <repository>
